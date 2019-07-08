@@ -11,12 +11,7 @@ const ms = require('parse-ms'); // parse-ms Package to format ms to somethings
 const fs = require('fs'); // file-sytem package.
 const prefix = "#" ;
 // Bot Configs:
-const config = require(path.join(__dirname, 'config.json')); // Bot Config
-const {
-  token,
-  prefix,
-  ids
-} = config;
+
 // Clients:
 const Client = new Discord.Client() // Discord Client
 Client.commands = new Discord.Collection() // Discord Collection For Commands
