@@ -29,7 +29,7 @@ SQLite.open(path.join(__dirname, 'profile.sql')) // Read SQL file
 let cmds = {
   profile: { cmd: 'profile', a: ['profile'] },
   setinfo: { cmd: 'pr-info', a: ['pr-info'] },
-  rep: { cmd: 'like', a: ['like'] },
+  rep: { cmd: 'rep', a: ['rep'] },
   credits: { cmd: 'credit', a: ['credit'] },
   daily: { cmd: 'daily', a: ['daily'] },
   transfer: { cmd: 'trans' },
@@ -195,7 +195,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     }
 
-  } else if(cmd == 'like') {
+  } else if(cmd == 'rep') {
 
     let rep = 86400000;
 
@@ -293,7 +293,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send('Your info set to: **' + args.join(' ') + '**')
 
-  } else if(cmd == `${prefix}buy`) {
+  } else if(cmd == 'buy') {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`);
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
