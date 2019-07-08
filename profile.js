@@ -9,7 +9,7 @@ const SQLite = require('sqlite'); // SQLite Package to read & write to sql files
 const path = require('path'); // Path Package to get paths easily
 const ms = require('parse-ms'); // parse-ms Package to format ms to somethings
 const fs = require('fs'); // file-sytem package.
-
+const prefix = "#" ;
 // Bot Configs:
 const config = require(path.join(__dirname, 'config.json')); // Bot Config
 const {
@@ -32,17 +32,17 @@ SQLite.open(path.join(__dirname, 'profile.sql')) // Read SQL file
 
 // Commands Here
 let cmds = {
-  profile: { cmd: 'بروفايل', a: ['بروفايلي'] },
-  setinfo: { cmd: 'معلوماتي', a: ['معلوماتي تعديل'] },
-  rep: { cmd: 'لايك', a: ['اعجاب'] },
-  credits: { cmd: 'فلوسي', a: ['رصيدي'] },
-  daily: { cmd: 'هدية', a: ['هديه'] },
-  transfer: { cmd: 'تحويل' },
-  add: { cmd: 'فلوس' },
-  buy: { cmd: 'شراء' },
-  set: { cmd: 'خلفية', a: ['خلفيه'] },
-  preview: { cmd: 'تجربة', a: ['تجربه'] },
-  mywalls: { cmd: 'خلفياتي' }
+  profile: { cmd: 'profile', a: ['profile'] },
+  setinfo: { cmd: 'pr-info', a: ['pr-info'] },
+  rep: { cmd: 'like', a: ['like'] },
+  credits: { cmd: 'credit', a: ['credit'] },
+  daily: { cmd: 'daily', a: ['daily'] },
+  transfer: { cmd: 'trans' },
+  add: { cmd: 'credit' },
+  buy: { cmd: 'buy-walls' },
+  set: { cmd: 'walls', a: ['walls'] },
+  preview: { cmd: 'test', a: ['test'] },
+  mywalls: { cmd: 'my-walls' }
 }
 
 // Register Commands
@@ -149,7 +149,7 @@ Client.on('message', async msg => { // When Bot is recived message
       }
     }
 
-    if(cmd == 'فلوسي') {
+    if(cmd == `${prefix}credit') {
 
       let user = msg.mentions.users.first() || msg.author;
 
@@ -174,7 +174,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
       }
 
-  } else if(cmd == 'هدية') {
+  } else if(cmd == `${prefix}daily`) {
 
     let daily = 86400000;
     let amount = funcs.generateInt(100, 300)
@@ -200,7 +200,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     }
 
-  } else if(cmd == 'لايك') {
+  } else if(cmd == `${prefix}like`) {
 
     let rep = 86400000;
 
@@ -234,7 +234,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     }
 
-  } else if(cmd == 'تحويل') {
+  } else if(cmd == `${prefix}trans`) {
 
     let men = msg.mentions.users.first();
 
@@ -265,7 +265,7 @@ Client.on('message', async msg => { // When Bot is recived message
     msg.channel.send(`${msg.author} has tranfered \`$${args[1]}\` to ${men}.`)
 
 
-  } else if(cmd == 'فلوس') {
+  } else if(cmd == `${prefix)credit`) {
 
     if(!ids.includes(msg.author.id)) return;
 
@@ -287,7 +287,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send('Added!')
 
-  } else if(cmd == 'معلوماتي') {
+  } else if(cmd == `${prefix}pr-info`) {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`);
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
@@ -298,7 +298,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send('Your info set to: **' + args.join(' ') + '**')
 
-  } else if(cmd == 'شراء') {
+  } else if(cmd == `${prefix}buy`) {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`);
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
@@ -331,7 +331,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send(`You have successfully purchased wallpaper No.${args[0]} With Price: \`$${wallsShop[args[0]].price}\``)
 
-  } else if(cmd == 'خلفية') {
+  } else if(cmd == `${prefix}walls`) {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`)
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
@@ -354,7 +354,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send(`Your profile image has been set.`);
 
-  } else if(cmd == 'تجربة') {
+  } else if(cmd == `${prefix}test`) {
 
     let wallpapers = config.wallpapers;
 
@@ -383,7 +383,7 @@ fs.readFile(__dirname + `/${wallpapers[args[0]].src}`, function (err, Background
   setTimeout(() => {
   msg.channel.send({file:canvas.toBuffer()})
 }, 2000)
-  } else if(cmd == 'خلفياتي') {
+  } else if(cmd == `${prefix}mywalls`) {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`);
 
@@ -403,7 +403,7 @@ fs.readFile(__dirname + `/${wallpapers[args[0]].src}`, function (err, Background
     let embed = new Discord.RichEmbed()
     .setAuthor(`${msg.author.username}`, msg.author.displayAvatarURL)
     .setDescription(`Your Wallpapers:`)
-    .setFooter(`Tip: To preview wallpaper try \`${prefix}تجربة\``)
+    .setFooter(`Tip: To preview wallpaper try \`${prefix}test\``)
 
     for (var wall in wallsArray) {
       embed.addField(`Wallpaper No.${wallsArray[wall].number}`, `Price: ${wallsArray[wall].p}`, true)
@@ -411,7 +411,7 @@ fs.readFile(__dirname + `/${wallpapers[args[0]].src}`, function (err, Background
 
     msg.channel.send(embed)
 
-  } else if(cmd == 'بروفايل') {
+  } else if(cmd == `${prefix}profile`) {
 
     let getvalueof = msg.mentions.users.first() || msg.author;
 
@@ -519,4 +519,4 @@ file: canvas.toBuffer()
 });
 
 
-Client.login(token)
+Client.login(process.env.TOKEN)
