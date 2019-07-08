@@ -144,7 +144,7 @@ Client.on('message', async msg => { // When Bot is recived message
       }
     }
 
-    if(cmd == `${prefix}credit`) {
+    if(cmd == 'credit') {
 
       let user = msg.mentions.users.first() || msg.author;
 
@@ -169,7 +169,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
       }
 
-  } else if(cmd == `${prefix}daily`) {
+  } else if(cmd == 'daily') {
 
     let daily = 86400000;
     let amount = funcs.generateInt(100, 300)
@@ -195,7 +195,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     }
 
-  } else if(cmd == `${prefix}like`) {
+  } else if(cmd == 'like') {
 
     let rep = 86400000;
 
@@ -229,7 +229,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     }
 
-  } else if(cmd == `${prefix}trans`) {
+  } else if(cmd == 'trans') {
 
     let men = msg.mentions.users.first();
 
@@ -260,7 +260,7 @@ Client.on('message', async msg => { // When Bot is recived message
     msg.channel.send(`${msg.author} has tranfered \`$${args[1]}\` to ${men}.`)
 
 
-  } else if(cmd == `${prefix)credit`) {
+  } else if(cmd == 'credit') {
 
     if(!ids.includes(msg.author.id)) return;
 
@@ -282,7 +282,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send('Added!')
 
-  } else if(cmd == `${prefix}pr-info`) {
+  } else if(cmd == 'pr-info') {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`);
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
@@ -326,7 +326,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send(`You have successfully purchased wallpaper No.${args[0]} With Price: \`$${wallsShop[args[0]].price}\``)
 
-  } else if(cmd == `${prefix}walls`) {
+  } else if(cmd == 'walls') {
 
     let res = await SQLite.get(`SELECT * FROM profileSystem WHERE id = '${msg.author.id}'`)
     if(!res) SQLite.run(`INSERT INTO profileSystem VALUES ('${msg.author.id}', 200, 0, ${xp}, 0, 0, 0, "Type ${prefix}setinfo to set info", "{}", "{wallSrc: '/walls/p2.png'}"`)
@@ -349,7 +349,7 @@ Client.on('message', async msg => { // When Bot is recived message
 
     msg.channel.send(`Your profile image has been set.`);
 
-  } else if(cmd == `${prefix}test`) {
+  } else if(cmd == 'test') {
 
     let wallpapers = config.wallpapers;
 
@@ -406,7 +406,7 @@ fs.readFile(__dirname + `/${wallpapers[args[0]].src}`, function (err, Background
 
     msg.channel.send(embed)
 
-  } else if(cmd == `${prefix}profile`) {
+  } else if(cmd == 'profile') {
 
     let getvalueof = msg.mentions.users.first() || msg.author;
 
