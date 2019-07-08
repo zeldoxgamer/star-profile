@@ -514,4 +514,4 @@ file: canvas.toBuffer()
 });
 
 
-Client.login(process.env.TOKEN)
+Client.login(process.env.BOT_TOKEN)
