@@ -144,7 +144,7 @@ Client.on('message', async msg => { // When Bot is recived message
       }
     }
 
-    if(cmd == `${prefix}credit') {
+    if(cmd == `${prefix}credit`) {
 
       let user = msg.mentions.users.first() || msg.author;
 
